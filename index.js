@@ -7,6 +7,18 @@ app.get('/', (req, res) => {
     })
 })
 
+app.get('/products', (req, res) => {
+    res.json({
+        "products": [
+            {
+                "name": "candy",
+                "price": 1,
+                "quantity": 100
+            }
+        ]
+    })
+})
+
 app.listen(3000);
 
 module.exports = app
