@@ -1,10 +1,14 @@
 const express = require('express');
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const db = require('./database')
+const productRoute = require('./product/router');
+
 const app = express();
 
 app.use(cors())
 app.use(bodyParser.json()) 
+
 
 app.get('/', (req, res) => {
     res.json({
@@ -12,24 +16,11 @@ app.get('/', (req, res) => {
     })
 })
 
-app.get('/products', (req, res) => {
-    res.json({
-        "products": [
-            {
-                "name": "candy",
-                "price": 1,
-                "quantity": 100
-            }
-        ]
-    })
+app.use('/api', productRoute);
+
+db.on('open', () => {
+    app.listen(3001);
 })
 
-app.post('/product', (req, res) => {
-    const body = req.body
-    console.log(body);
-    res.json(body)
-})
-
-app.listen(3000);
 
 module.exports = app
